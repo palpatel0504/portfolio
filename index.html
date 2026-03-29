@@ -212,6 +212,32 @@
     display: inline-block;
   }
   .btn-ghost:hover { background: var(--green-dim); }
+  .btn-resume {
+    position: relative;
+    overflow: hidden;
+    border-color: rgba(192,132,252,0.42);
+    background: linear-gradient(135deg, rgba(192,132,252,0.2), rgba(168,85,247,0.08));
+    box-shadow: 0 0 0 1px rgba(192,132,252,0.08) inset, 0 0 24px rgba(192,132,252,0.12);
+  }
+  .btn-resume::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(110deg, transparent 20%, rgba(255,255,255,0.22) 48%, transparent 76%);
+    transform: translateX(-135%);
+    animation: resumeShine 3.8s ease-in-out infinite;
+  }
+  .btn-resume::after {
+    content: '↓';
+    margin-left: 0.6rem;
+    position: relative;
+    display: inline-block;
+    animation: resumeArrow 1.6s ease-in-out infinite;
+  }
+  .btn-resume:hover {
+    background: linear-gradient(135deg, rgba(192,132,252,0.28), rgba(168,85,247,0.14));
+    box-shadow: 0 10px 32px rgba(192,132,252,0.22);
+  }
 
   /* Hero stats */
   .hero-stats {
@@ -412,6 +438,14 @@
   @keyframes scanPulse {
     0%, 100% { transform: translateY(-34px); opacity: 0.35; }
     50% { transform: translateY(34px); opacity: 0.9; }
+  }
+  @keyframes resumeShine {
+    0%, 18% { transform: translateX(-135%); }
+    38%, 100% { transform: translateX(135%); }
+  }
+  @keyframes resumeArrow {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(2px); }
   }
 
   /* Section styles */
@@ -1173,6 +1207,7 @@
     </p>
     <div class="hero-btns">
       <a href="#projects" class="btn-primary">View Projects</a>
+      <a href="https://drive.google.com/file/d/19YCEhmNGBEyuT4K6FmT-jshZSopXeKgq/view?usp=drive_link" target="_blank" rel="noreferrer" class="btn-ghost btn-resume">Resume</a>
       <a href="#ai-section" class="btn-ghost">Chat with AI</a>
     </div>
   </div>
@@ -1541,6 +1576,7 @@
       </div>
       <div class="contact-actions">
         <a href="mailto:palpatel5040@gmail.com" class="btn-primary">Email Pal</a>
+        <a href="https://drive.google.com/file/d/19YCEhmNGBEyuT4K6FmT-jshZSopXeKgq/view?usp=drive_link" target="_blank" rel="noreferrer" class="btn-ghost btn-resume">Resume</a>
         <a href="#projects" class="btn-ghost">View Work</a>
       </div>
       <div class="contact-note">
