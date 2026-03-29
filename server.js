@@ -3,11 +3,15 @@ const path = require('path');
 require('dotenv').config();
 
 const app = express();
-const HOST = process.env.HOST || '127.0.0.1';
+const IS_RENDER = process.env.RENDER === 'true';
+const HOST = process.env.HOST || (IS_RENDER ? '0.0.0.0' : '127.0.0.1');
 const PORT = Number(process.env.PORT || 3000);
 const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
 const OPENROUTER_MODEL = process.env.OPENROUTER_MODEL || 'openai/gpt-4o-mini';
-const SITE_URL = process.env.SITE_URL || `http://${HOST}:${PORT}`;
+const SITE_URL =
+  process.env.SITE_URL ||
+  process.env.RENDER_EXTERNAL_URL ||
+  `http://${HOST}:${PORT}`;
 const SITE_NAME = process.env.SITE_NAME || 'Pal Patel Portfolio';
 
 app.use(express.json({ limit: '1mb' }));
