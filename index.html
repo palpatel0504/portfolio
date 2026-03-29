@@ -787,6 +787,12 @@
     gap: 3rem;
     align-items: start;
   }
+  .contact-left {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    min-width: 0;
+  }
   .contact-cards {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -893,6 +899,185 @@
     line-height: 1.8;
     letter-spacing: 0.05em;
   }
+  .contact-roadmap {
+    position: relative;
+    min-height: 280px;
+    border: 1px solid var(--border);
+    background:
+      radial-gradient(circle at 10% 20%, rgba(192,132,252,0.08), transparent 28%),
+      radial-gradient(circle at 90% 80%, rgba(192,132,252,0.06), transparent 24%),
+      linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0)),
+      var(--surface);
+    overflow: hidden;
+  }
+  .contact-roadmap::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(192,132,252,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(192,132,252,0.04) 1px, transparent 1px);
+    background-size: 48px 48px;
+    opacity: 0.35;
+    pointer-events: none;
+  }
+  .roadmap-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .roadmap-path-base {
+    fill: none;
+    stroke: rgba(192,132,252,0.18);
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-dasharray: 7 12;
+  }
+  .roadmap-path-glow {
+    fill: none;
+    stroke: rgba(192,132,252,0.65);
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-dasharray: 220 900;
+    filter: drop-shadow(0 0 10px rgba(192,132,252,0.32));
+    animation: roadmapFlow 7s linear infinite;
+  }
+  .roadmap-node {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 1px solid rgba(192,132,252,0.48);
+    background: rgba(20, 14, 34, 0.94);
+    box-shadow: 0 0 0 6px rgba(192,132,252,0.08);
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  }
+  .roadmap-node::before {
+    content: '';
+    position: absolute;
+    inset: 3px;
+    border-radius: 50%;
+    background: var(--green);
+    box-shadow: 0 0 14px var(--green-glow);
+  }
+  .roadmap-node::after {
+    content: attr(data-label);
+    position: absolute;
+    left: 50%;
+    bottom: calc(100% + 10px);
+    transform: translateX(-50%) translateY(6px);
+    padding: 0.35rem 0.55rem;
+    white-space: nowrap;
+    border: 1px solid rgba(192,132,252,0.2);
+    background: rgba(16, 11, 28, 0.96);
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    opacity: 0;
+    transition: opacity 0.2s, transform 0.2s;
+    pointer-events: none;
+  }
+  .roadmap-node:hover {
+    transform: translate(-50%, -50%) scale(1.18);
+    border-color: var(--green);
+    box-shadow: 0 0 0 8px rgba(192,132,252,0.12), 0 0 22px rgba(192,132,252,0.18);
+  }
+  .roadmap-node:hover::after {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  .roadmap-node-1 { animation: nodePulse 3.6s ease-in-out infinite; }
+  .roadmap-node-2 { animation: nodePulse 3.6s ease-in-out infinite 0.6s; }
+  .roadmap-node-3 { animation: nodePulse 3.6s ease-in-out infinite 1.2s; }
+  .roadmap-node-4 { animation: nodePulse 3.6s ease-in-out infinite 1.8s; }
+  .roadmap-node-5 { animation: nodePulse 3.6s ease-in-out infinite 2.4s; }
+  .roadmap-year {
+    position: absolute;
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.14em;
+    color: var(--muted);
+    text-transform: uppercase;
+    opacity: 0.78;
+  }
+  .roadmap-year-1 { left: 8%; top: 79%; }
+  .roadmap-year-2 { left: 27%; top: 24%; }
+  .roadmap-year-3 { left: 46%; top: 73%; }
+  .roadmap-year-4 { left: 65%; top: 18%; }
+  .roadmap-year-5 { right: 6%; top: 65%; }
+  .roadmap-car {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 34px;
+    height: 16px;
+    border: 1px solid rgba(192,132,252,0.45);
+    border-radius: 10px 12px 8px 8px;
+    background: linear-gradient(135deg, rgba(245,238,255,0.96), rgba(192,132,252,0.92));
+    box-shadow: 0 0 18px rgba(192,132,252,0.28);
+    transform-origin: 38% 72%;
+    z-index: 3;
+  }
+  .roadmap-car::before,
+  .roadmap-car::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #130d21;
+    border: 1px solid rgba(192,132,252,0.35);
+    box-shadow: 0 0 8px rgba(192,132,252,0.16);
+  }
+  .roadmap-car::before { left: 5px; }
+  .roadmap-car::after { right: 5px; }
+  .roadmap-car-roof {
+    position: absolute;
+    left: 8px;
+    top: -6px;
+    width: 16px;
+    height: 10px;
+    border: 1px solid rgba(192,132,252,0.38);
+    border-bottom: none;
+    border-radius: 8px 8px 0 0;
+    background: rgba(245,238,255,0.2);
+  }
+  .roadmap-info {
+    position: absolute;
+    min-width: 170px;
+    max-width: 220px;
+    padding: 0.75rem 0.85rem;
+    border: 1px solid rgba(192,132,252,0.24);
+    background: rgba(16, 11, 28, 0.96);
+    box-shadow: 0 0 24px rgba(192,132,252,0.12);
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.28s ease, transform 0.28s ease;
+    z-index: 4;
+    pointer-events: none;
+  }
+  .roadmap-info.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .roadmap-info-title {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: 0.45rem;
+  }
+  .roadmap-info-text {
+    font-size: 0.78rem;
+    line-height: 1.65;
+    color: rgba(237,233,246,0.78);
+  }
 
   /* Education badge */
   .edu-card {
@@ -948,6 +1133,15 @@
     transition: opacity 0.6s ease, transform 0.6s ease;
   }
   .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  @keyframes roadmapFlow {
+    from { stroke-dashoffset: 0; }
+    to { stroke-dashoffset: -1120; }
+  }
+  @keyframes nodePulse {
+    0%, 100% { box-shadow: 0 0 0 6px rgba(192,132,252,0.08); }
+    50% { box-shadow: 0 0 0 10px rgba(192,132,252,0.12), 0 0 16px rgba(192,132,252,0.18); }
+  }
 
   @media (max-width: 768px) {
     body {
@@ -1117,6 +1311,17 @@
       padding: 0.95rem 1rem;
     }
     .contact-grid { grid-template-columns: 1fr; }
+    .contact-left {
+      order: 2;
+    }
+    .contact-roadmap {
+      min-height: 220px;
+    }
+    .roadmap-info {
+      min-width: 150px;
+      max-width: 180px;
+      padding: 0.65rem 0.7rem;
+    }
     .contact-panel { padding: 1.5rem; }
     .contact-headline {
       font-size: clamp(1.8rem, 9vw, 2.4rem);
@@ -1143,6 +1348,33 @@
   }
 
   @media (max-width: 480px) {
+    .contact-roadmap {
+      min-height: 200px;
+    }
+    .roadmap-car {
+      width: 28px;
+      height: 14px;
+    }
+    .roadmap-car-roof {
+      left: 6px;
+      width: 14px;
+      height: 8px;
+    }
+    .roadmap-node {
+      width: 14px;
+      height: 14px;
+    }
+    .roadmap-node::after {
+      font-size: 0.52rem;
+      letter-spacing: 0.1em;
+    }
+    .roadmap-info {
+      min-width: 136px;
+      max-width: 160px;
+    }
+    .roadmap-year {
+      font-size: 0.52rem;
+    }
     .hero-stats {
       grid-template-columns: 1fr;
     }
@@ -1219,8 +1451,8 @@
       <div class="hero-core-label">AI CORE</div>
     </div>
     <div class="hero-chip hero-chip-1">FastAPI</div>
-    <div class="hero-chip hero-chip-2">LangChain</div>
-    <div class="hero-chip hero-chip-3">OpenAI</div>
+    <div class="hero-chip hero-chip-2">OpenAI</div>
+    <div class="hero-chip hero-chip-3">LangChain</div>
     <div class="hero-chip hero-chip-4">Automation</div>
   </div>
   <div class="hero-stats">
@@ -1519,34 +1751,57 @@
     <h2 class="section-title">Contact</h2>
   </div>
   <div class="contact-grid reveal">
-    <div class="contact-cards">
-      <a href="mailto:palpatel5040@gmail.com" class="contact-link">
-        <span class="contact-icon">📧</span>
-        <div>
-          <span class="contact-label">Email</span>
-          <span class="contact-val">palpatel5040@gmail.com</span>
+    <div class="contact-left">
+      <div class="contact-cards">
+        <a href="mailto:palpatel5040@gmail.com" class="contact-link">
+          <span class="contact-icon">📧</span>
+          <div>
+            <span class="contact-label">Email</span>
+            <span class="contact-val">palpatel5040@gmail.com</span>
+          </div>
+        </a>
+        <a href="https://github.com/palpatel0504" target="_blank" rel="noreferrer" class="contact-link">
+          <span class="contact-icon">💻</span>
+          <div>
+            <span class="contact-label">GitHub</span>
+            <span class="contact-val">github.com/palpatel0504</span>
+          </div>
+        </a>
+        <a href="https://linkedin.com/in/palpatel05" target="_blank" rel="noreferrer" class="contact-link">
+          <span class="contact-icon">🔗</span>
+          <div>
+            <span class="contact-label">LinkedIn</span>
+            <span class="contact-val">linkedin.com/in/palpatel05</span>
+          </div>
+        </a>
+        <div class="contact-link" style="cursor:default">
+          <span class="contact-icon">📍</span>
+          <div>
+            <span class="contact-label">Location</span>
+            <span class="contact-val">Gujarat, India</span>
+          </div>
         </div>
-      </a>
-      <a href="https://github.com/palpatel0504" target="_blank" rel="noreferrer" class="contact-link">
-        <span class="contact-icon">💻</span>
-        <div>
-          <span class="contact-label">GitHub</span>
-          <span class="contact-val">github.com/palpatel0504</span>
+      </div>
+      <div class="contact-roadmap reveal" aria-label="Career timeline" id="contact-roadmap">
+        <svg class="roadmap-svg" viewBox="0 0 1000 320" preserveAspectRatio="none" aria-hidden="true">
+          <path id="roadmap-path" class="roadmap-path-base" d="M70 230 C160 260, 220 110, 330 130 S500 250, 610 160 S790 60, 930 170" />
+          <path class="roadmap-path-glow" d="M70 230 C160 260, 220 110, 330 130 S500 250, 610 160 S790 60, 930 170" />
+        </svg>
+        <div class="roadmap-car" id="roadmap-car" aria-hidden="true"><div class="roadmap-car-roof"></div></div>
+        <div class="roadmap-info" id="roadmap-info" aria-live="polite">
+          <div class="roadmap-info-title" id="roadmap-info-title"></div>
+          <div class="roadmap-info-text" id="roadmap-info-text"></div>
         </div>
-      </a>
-      <a href="https://linkedin.com/in/palpatel05" target="_blank" rel="noreferrer" class="contact-link">
-        <span class="contact-icon">🔗</span>
-        <div>
-          <span class="contact-label">LinkedIn</span>
-          <span class="contact-val">linkedin.com/in/palpatel05</span>
-        </div>
-      </a>
-      <div class="contact-link" style="cursor:default">
-        <span class="contact-icon">📍</span>
-        <div>
-          <span class="contact-label">Location</span>
-          <span class="contact-val">Gujarat, India</span>
-        </div>
+        <div class="roadmap-node roadmap-node-1" data-fraction="0.04" data-label="HSC PCM" data-title="2022" data-copy="Completed HSC in PCM and built a strong academic base in maths, science, and problem solving."></div>
+        <div class="roadmap-node roadmap-node-2" data-fraction="0.24" data-label="B.E. CE" data-title="2022+" data-copy="Started B.E. in Computer Engineering at SVIT and moved deeper into software, AI, and backend development."></div>
+        <div class="roadmap-node roadmap-node-3" data-fraction="0.49" data-label="Oasis" data-title="2025" data-copy="Worked as a Web Developer Intern at Oasis Infobyte and shipped responsive web projects."></div>
+        <div class="roadmap-node roadmap-node-4" data-fraction="0.68" data-label="Microsoft / CSRBOX" data-title="2025" data-copy="Completed Microsoft Data and AI training and an AI internship at CSRBOX in the same growth phase."></div>
+        <div class="roadmap-node roadmap-node-5" data-fraction="0.95" data-label="BankBenchers" data-title="Present" data-copy="Currently building production-grade AI and FastAPI backend features at BankBenchers."></div>
+        <div class="roadmap-year roadmap-year-1">2022</div>
+        <div class="roadmap-year roadmap-year-2">2022+</div>
+        <div class="roadmap-year roadmap-year-3">2025</div>
+        <div class="roadmap-year roadmap-year-4">2025</div>
+        <div class="roadmap-year roadmap-year-5">Present</div>
       </div>
     </div>
     <aside class="contact-panel reveal">
@@ -1587,7 +1842,7 @@
 </section>
 
 <footer>
-  <span style="color:var(--green)">Pal Patel</span> &nbsp;·&nbsp; AI/ML Developer &nbsp;·&nbsp; Built with ♥ and OpenRouter AI
+  <span style="color:var(--green)">Pal Patel</span> &nbsp;·&nbsp; AI/ML & Backend Developer &nbsp;·&nbsp; Building Scalable AI Solutions
 </footer>
 
 <script>
@@ -1663,6 +1918,119 @@ const observer = new IntersectionObserver((entries) => {
   entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
 }, { threshold: 0.12 });
 document.querySelectorAll('.reveal, .exp-item, .project-card, .cert-item, .skill-card').forEach(el => observer.observe(el));
+
+const roadmap = document.getElementById('contact-roadmap');
+const roadmapPath = document.getElementById('roadmap-path');
+const roadmapCar = document.getElementById('roadmap-car');
+const roadmapInfo = document.getElementById('roadmap-info');
+const roadmapInfoTitle = document.getElementById('roadmap-info-title');
+const roadmapInfoText = document.getElementById('roadmap-info-text');
+const roadmapNodes = Array.from(document.querySelectorAll('.roadmap-node'));
+
+if (roadmap && roadmapPath && roadmapCar && roadmapInfo && roadmapInfoTitle && roadmapInfoText && roadmapNodes.length) {
+  const roadmapLength = roadmapPath.getTotalLength();
+  const pauseMs = 2300;
+  const driveMs = 1800;
+  const stopFractions = roadmapNodes.map((node) => Number(node.dataset.fraction || 0));
+
+  const positionNodesOnPath = () => {
+    roadmapNodes.forEach((node, index) => {
+      const point = roadmapPath.getPointAtLength(roadmapLength * stopFractions[index]);
+      node.style.left = `${point.x}px`;
+      node.style.top = `${point.y}px`;
+    });
+  };
+
+  const placeInfoCard = (node) => {
+    const roadmapRect = roadmap.getBoundingClientRect();
+    const nodeRect = node.getBoundingClientRect();
+    const infoWidth = roadmapInfo.offsetWidth || 190;
+    const infoHeight = roadmapInfo.offsetHeight || 86;
+
+    let left = nodeRect.left - roadmapRect.left - infoWidth / 2 + nodeRect.width / 2;
+    let top = nodeRect.top - roadmapRect.top - infoHeight - 16;
+
+    left = Math.max(10, Math.min(left, roadmapRect.width - infoWidth - 10));
+    if (top < 10) {
+      top = nodeRect.bottom - roadmapRect.top + 14;
+    }
+
+    roadmapInfo.style.left = `${left}px`;
+    roadmapInfo.style.top = `${top}px`;
+  };
+
+  const setCarAt = (fraction) => {
+    const safeFraction = Math.max(0, Math.min(fraction, 1));
+    const point = roadmapPath.getPointAtLength(roadmapLength * safeFraction);
+    const nextPoint = roadmapPath.getPointAtLength(Math.min(roadmapLength, roadmapLength * safeFraction + 1));
+    const angle = Math.atan2(nextPoint.y - point.y, nextPoint.x - point.x) * (180 / Math.PI);
+    roadmapCar.style.left = `${point.x}px`;
+    roadmapCar.style.top = `${point.y}px`;
+    roadmapCar.style.transform = `translate(-50%, -50%) rotate(${angle}deg)`;
+  };
+
+  const showStop = (index) => {
+    const node = roadmapNodes[index];
+    roadmapNodes.forEach((item, itemIndex) => {
+      item.style.opacity = itemIndex === index ? '1' : '';
+    });
+    roadmapInfoTitle.textContent = node.dataset.title || '';
+    roadmapInfoText.textContent = node.dataset.copy || '';
+    placeInfoCard(node);
+    roadmapInfo.classList.add('visible');
+  };
+
+  const wait = (ms) => new Promise((resolve) => window.setTimeout(resolve, ms));
+
+  const animateDrive = (from, to) =>
+    new Promise((resolve) => {
+      const start = performance.now();
+
+      const frame = (now) => {
+        const progress = Math.min((now - start) / driveMs, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        setCarAt(from + (to - from) * eased);
+
+        if (progress < 1) {
+          requestAnimationFrame(frame);
+        } else {
+          resolve();
+        }
+      };
+
+      requestAnimationFrame(frame);
+    });
+
+  const cycleRoadmap = async () => {
+    let index = 0;
+    positionNodesOnPath();
+    setCarAt(stopFractions[index]);
+
+    while (true) {
+      positionNodesOnPath();
+      showStop(index);
+      await wait(pauseMs);
+      roadmapInfo.classList.remove('visible');
+
+      const nextIndex = (index + 1) % stopFractions.length;
+      const from = stopFractions[index];
+      const to = stopFractions[nextIndex];
+
+      if (nextIndex === 0) {
+        await animateDrive(from, 1);
+        setCarAt(0);
+        await animateDrive(0, stopFractions[0]);
+      } else {
+        await animateDrive(from, to);
+      }
+
+      index = nextIndex;
+    }
+  };
+
+  window.addEventListener('resize', positionNodesOnPath);
+  cycleRoadmap();
+}
 
 // ─── AI CHAT ──────────────────────────────────────────────────
 const SYSTEM_PROMPT = `You are an AI portfolio assistant for Pal Patel, a Computer Engineering student and AI/ML developer from Gujarat, India.
